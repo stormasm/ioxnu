@@ -1,0 +1,43 @@
+[package]
+authors = ["The Nushell Project Developers"]
+description = "CLI-related functionality for Nushell"
+repository = "https://github.com/nushell/nushell/tree/main/crates/nu-cli"
+edition = "2021"
+license = "MIT"
+name = "nu-cli"
+version = "0.76.0"
+
+[lib]
+bench = false
+
+[dev-dependencies]
+nu-test-support = { version = "0.76.0" }
+#nu-command = { version = "0.76.0" }
+rstest = { version = "0.16.0", default-features = false }
+
+[dependencies]
+nu-engine = { version = "0.76.0" }
+nu-path = { version = "0.76.0" }
+nu-parser = { version = "0.76.0" }
+nu-protocol = { version = "0.76.0" }
+nu-utils = { version = "0.76.0" }
+nu-ansi-term = "0.46.0"
+nu-color-config = { version = "0.76.0" }
+
+reedline = { path = "../reedline", features = ["bashisms"] }
+
+atty = "0.2.14"
+chrono = { default-features = false, features = ["std"], version = "0.4.23" }
+crossterm = "0.24.0"
+fancy-regex = "0.11.0"
+fuzzy-matcher = "0.3.7"
+is_executable = "1.0.1"
+once_cell = "1.17.0"
+log = "0.4"
+miette = { version = "5.5.0", features = ["fancy-no-backtrace"] }
+percent-encoding = "2"
+sysinfo = "0.28.0"
+thiserror = "1.0.31"
+
+[features]
+plugin = []
