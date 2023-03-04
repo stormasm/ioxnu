@@ -19,7 +19,7 @@ use nu_protocol::{
     Spanned, Type, Value, VarId,
 };
 use nu_utils::utils::perf;
-use reedline::{CursorConfig, DefaultHinter, EditCommand, Emacs, SqliteBackedHistory, Vi};
+use reedline::{CursorConfig, DefaultHinter, EditCommand, Emacs, Vi};
 use std::{
     io::{self, Write},
     sync::atomic::Ordering,
@@ -110,18 +110,14 @@ pub fn evaluate_repl(
         engine_state.config.history_file_format,
     );
     if let Some(history_path) = history_path.as_deref() {
-        let history: Box<dyn reedline::History> = match engine_state.config.history_file_format {
-            HistoryFileFormat::PlainText => Box::new(
-                FileBackedHistory::with_file(
-                    config.max_history_size as usize,
-                    history_path.to_path_buf(),
-                )
-                .into_diagnostic()?,
-            ),
-            HistoryFileFormat::Sqlite => Box::new(
-                SqliteBackedHistory::with_file(history_path.to_path_buf()).into_diagnostic()?,
-            ),
-        };
+        let history: Box<dyn reedline::History> = Box::new(
+            FileBackedHistory::with_file(
+                config.max_history_size as usize,
+                history_path.to_path_buf(),
+            )
+            .into_diagnostic()?,
+        );
+
         line_editor = line_editor.with_history(history);
     };
     perf(
